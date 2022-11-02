@@ -1,0 +1,49 @@
+
+{% load static %}
+
+
+<div class="c_box" style="background-color: white; margin-left: 15px; margin-right: 15px; border: 2px solid; ">
+    <canvas style="margin: 10px" id="myChart">
+      
+      <script>
+      Chart.defaults.elements.line.borderWidth = 1.5;                
+        const labels = [
+        ];
+      
+        const data = {
+          labels: labels,
+          datasets: [
+        ]
+        };
+      
+        const config = {
+          type: 'line',
+          data: data,
+          
+          options: {
+            datasets: {
+                line: {
+                    pointRadius: 1
+                }
+            },
+            plugins: {
+              legend: {
+                display: true,
+                position: 'bottom',
+                label: {
+                    font: { size: 3 },
+                    color: ['rgb(255, 99, 132)', 'rgb(29, 219, 22)']
+                }
+              }
+            }
+          }
+        };
+
+
+        const myChart = new Chart(
+          document.getElementById('myChart'),
+          config
+        );
+      </script>
+    </canvas>
+</div>

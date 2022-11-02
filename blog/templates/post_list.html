@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block content %}
+
+
+	<div style="float: left; width: calc(100vh -25%); padding-top: 10px;">
+		<form name="data" method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			
+			<div class="bg-success bg-gradient text-white c_box" style="border: 2px solid; ">
+				<div style="padding-bottom: 2px;">
+					<center>
+					<h2 style="font-size: 25px">모델 선택</h2>
+					</center>
+				</div>
+				<div style="border-top: 2px solid;">
+					<div style="padding: 15px;">
+						<div class="funkyradio">
+							<div class="funkyradio-success">
+								<input type="radio" name="radio" id="radio3" value="ARIMA" checked/>
+								<label for="radio3">선형회귀</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="bg-success bg-gradient text-white c_box" style=" border: 2px solid; margin-top: 8px; ">
+				<div style="padding-bottom: 2px;">
+					<center>
+					<h2 style="font-size: 25px">예측 데이터</h2>
+						
+					</center>
+				</div>
+				<div style="border-top: 3px solid;">
+					<div style="padding: 15px;">
+						<div class="funkyradio">
+							<p style="margin-bottom: -1px;">스포츠 종목</p>
+							<div class="funkyradio-success">
+								<input type="radio" name="checkbox" id="checkbox2" value="1"
+								{% if CHECK_1 == 'on' %} checked {% else %} {% endif %}/>
+								<label for="checkbox2">야구[두산]</label>
+							</div>
+							<div class="funkyradio-info">
+								<input type="radio" name="checkbox" id="checkbox6" value="2"
+								{% if CHECK_2 == 'on' %} checked {% else %}  {% endif %}/>
+								<label for="checkbox6">여자 배구[GS 칼텍스]</label>
+							</div>
+							<div class="funkyradio-7">
+								<input type="radio" name="checkbox" id="checkbox7" value="3" disabled
+								{% if CHECK_3 == 'on' %} checked {% else %}  {% endif %}/>
+								<label for="checkbox7">여자 배구[흥국생명]</label>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div style="width: 100%; margin:0px; padding-top: 10px;" >
+			<center>
+			<div style="width: 100%" class="btn-group btn-group-lg" role="group" aria-label="Basic mixed styles example">
+				
+				<button style="width: 50%; padding: 15px; border: 2px solid white; border-radius: 15px;" type="submit" class="btn btn-success bg-success bg-gradient" value="start">실행</button>
+				<button style="width: 50%; padding: 15px; border: 2px solid white; border-radius: 15px;" type="submit" name="reset" class="btn btn-success bg-success bg-gradient" value="clear">초기화</button>
+				
+			</div>
+			</center>
+			</div>
+		</form>
+	</div>
+	
+	<div style="padding-top: 10px; position: absolute; left: 205px; margin-right: 10px; width: calc(100% - 205px) ">
+		<div class="bg-success bg-gradient text-white c_box"  style="height: auto; border: 2px solid; ">
+			<div style="border-bottom: 2px solid;  ">
+				<center>
+					<h2 style="font-size: 25px">예측결과</h2>
+				</center>
+			</div>
+			<div style="margin-top:10px; ">
+			
+			{% if GRAPH == 0 %}
+				{% include 'graph_0.html' %}
+			{% elif GRAPH == 1 %}
+				{% include 'graph_1.html' %}
+			{% elif GRAPH == 2 %}
+				{% include 'graph_2.html' %}
+			{% elif GRAPH == 3 %}
+				{% include 'graph_3.html' %}
+			{% endif %}
+			</div>
+			<div class="c_box" style="margin-top: 10px; margin-bottom: 10px; margin-left: 15px; margin-right: 15px; border: 2px solid white; height: 10%; padding: 10px; 
+			background-color: white; color: black;">
+				<center>
+					<p style="font-size: 20px">모델평가 및 검증</p>
+				</center>
+				{% if CHECK == 'off' %}
+				{% else %}
+				
+					{% if CHECK_1 == 'on' %}
+					<center>
+						<p>[프로야구 두산 홈경기 2018~2022 관중예측모델 평가값]</p>
+						<p>MAE (Mean Absolute Error)= 4177.90</p>
+						<p>RMSE=5344.55</p>
+						<p>r2_score: 0.3103459086334698</p>
+					</center>
+					{% endif %}
+					{% if CHECK_2 == 'on' %}
+					<center>
+						<p>[여자프로배구 GS칼텍스 홈경기 2018~2022 관중예측모델 평가값]</p>
+						<p>MAE=720.03</p>
+						<p>RMSE= 987.79</p>
+						<p>r2_score=0.32755176380889783</p>
+					</center>
+					{% endif %}
+					{% if CHECK_3 == 'on' %}
+					<center>
+						<p>[여자프로배구 흥국생명 홈경기 2018~2022 관중예측모델 평가값]</p>
+						<p>MAE=761.82</p>
+						<p>RMSE=1014.34</p>
+						<p>r2_score=0.29091812073927137</p>
+					</center>
+					{% endif %}
+
+				{% endif %}	
+			</div>
+
+		</div>
+			
+	</div>
+{% endblock %}
